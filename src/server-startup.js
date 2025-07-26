@@ -61,12 +61,6 @@ import { router as dataMaidRouter } from './endpoints/data-maid.js';
  * @param {import('express').Express} app The Express app to use
  */
 export function redirectDeprecatedEndpoints(app) {
-    /**
-     * Redirect a deprecated API endpoint URL to its replacement. Because fetch, form submissions, and $.ajax follow
-     * redirects, this is transparent to client-side code.
-     * @param {string} src The URL to redirect from.
-     * @param {string} destination The URL to redirect to.
-     */
     function redirect(src, destination) {
         app.use(src, (req, res) => {
             console.warn(`API endpoint ${src} is deprecated; use ${destination} instead`);
@@ -243,9 +237,13 @@ export class ServerStartup {
 
             let host = url.hostname;
             if (ipVersion === 6) host = urlHostnameToIPv6(url.hostname);
+
+            // ★ 关键修改：优先使用 Render 注入的 PORT
+            const port = Number(process.env.PORT || url.port || 443);
+
             server.listen({
                 host: host,
-                port: Number(url.port || 443),
+                port: port,
                 // see https://nodejs.org/api/net.html#serverlisten for why ipv6Only is used
                 ipv6Only: true,
             });
@@ -266,9 +264,13 @@ export class ServerStartup {
 
             let host = url.hostname;
             if (ipVersion === 6) host = urlHostnameToIPv6(url.hostname);
+
+            // ★ 关键修改：优先使用 Render 注入的 PORT
+            const port = Number(process.env.PORT || url.port || 80);
+
             server.listen({
                 host: host,
-                port: Number(url.port || 80),
+                port: port,
                 // see https://nodejs.org/api/net.html#serverlisten for why ipv6Only is used
                 ipv6Only: true,
             });
