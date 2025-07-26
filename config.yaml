@@ -1,0 +1,5 @@
+listen: true
+whitelistMode: false
+# 可选：Render 通常只提供 IPv4
+enableIPv6: false
+enableIPv4: true
