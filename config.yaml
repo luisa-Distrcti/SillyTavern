@@ -1,5 +1,11 @@
 listen: true
 whitelistMode: false
-# 可选：Render 通常只提供 IPv4
+enableForwardedWhitelist: true
+
+basicAuthMode: true
+basicAuthUser:
+  username: "st_admin"
+  password: "Y8rg-4JvNfQ#2pLmW5z"
+
 enableIPv6: false
 enableIPv4: true
